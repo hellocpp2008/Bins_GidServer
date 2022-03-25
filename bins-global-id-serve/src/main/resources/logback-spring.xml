@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false">
+  <!-- 读取spring.application.name中的属性来生成日志文件名 -->
+  <!--    <springProperty  name="appName" source="spring.application.name" defaultValue="localhost"/>-->
+  <property name="encoding" value="UTF-8"/>
+
+  <property name="log.path" value="logs"/>
+  <!-- 彩色日志格式 -->
+  <property name="CONSOLE_LOG_PATTERN"
+    value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(WTraceId[%X{wtraceid}]){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %X{requestId} %X{uri} %X{urlParam} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+  <springProperty name="logFileName" source="log.fileName" defaultValue="bins-global-id-provider"/>
+  <!-- 彩色日志依赖的渲染类 -->
+  <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+  <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+  <conversionRule conversionWord="wEx"
+    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+  <!-- Console log output -->
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- 日志文件路径-->
+    <file>${log.path}/${logFileName}.log</file>
+    <!-- 滚动策略-->
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${log.path}/${logFileName}.bins-gid-server.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+      <maxFileSize>1GB</maxFileSize>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%date WTraceId[%X{wtraceid}] [%thread] %-5level [%logger{50}] %file:%line %X{requestId} %X{uri} %X{urlParam} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${log.path}/error.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${log.path}/%d{yyyy-MM}/error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+      <maxFileSize>50MB</maxFileSize>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%date WTraceId[%X{wtraceid}] [%thread] %-5level [%logger{50}] %file:%line %X{requestId} %X{uri} %X{urlParam} - %msg%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+  </appender>
+
+  <appender name="newconsole" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="newfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${log.path}/info.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${log.path}/backup/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+    </rollingPolicy>
+    <encoder>
+      <pattern>[%thread] WTraceId[%X{wtraceid}] |-| %level |-| %d{yyyy-MM-dd'T'HH:mm:ss.SSS+08:00} |-| %logger{5}[%L] |-| %msg |-| %n</pattern>
+    </encoder>
+  </appender>
+
+  <springProfile name="local">
+    <root level="DEBUG">
+      <appender-ref ref="file"/>
+      <appender-ref ref="console"/>
+      <appender-ref ref="error"/>
+    </root>
+  </springProfile>
+
+  <springProfile name="dev,online,test,simulate,test3,qa,beta">
+    <root level="DEBUG">
+      <appender-ref ref="file"/>
+      <appender-ref ref="console"/>
+      <appender-ref ref="error"/>
+    </root>
+  </springProfile>
+
+  <springProfile name="container">
+    <root level="INFO">
+      <appender-ref ref="newfile"/>
+      <appender-ref ref="newconsole"/>
+      <appender-ref ref="error"/>
+    </root>
+  </springProfile>
+
+  <logger name="javax.activation" level="WARN"/>
+  <logger name="javax.mail" level="WARN"/>
+  <logger name="javax.xml.bind" level="WARN"/>
+  <logger name="ch.qos.logback" level="WARN"/>
+  <logger name="com.netflix" level="WARN"/>
+  <logger name="com.netflix.discovery" level="INFO"/>
+  <logger name="com.sun" level="WARN"/>
+  <logger name="org.apache" level="WARN"/>
+  <logger name="org.bson" level="WARN"/>
+  <logger name="org.springframework" level="WARN"/>
+  <logger name="org.springframework.web" level="WARN"/>
+  <logger name="org.springframework.security" level="WARN"/>
+  <logger name="org.springframework.cache" level="WARN"/>
+  <logger name="sun.rmi" level="WARN"/>
+  <logger name="sun.rmi.transport" level="WARN"/>
+
+  <logger name="org.mybatis.spring" level="INFO"/>
+  <logger name="org.apache.ibatis" level="TRACE"/>
+  <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+  <logger name="java.sql.Statement" level="DEBUG"/>
+  <logger name="java.sql.Connection" level="DEBUG"/>
+</configuration>

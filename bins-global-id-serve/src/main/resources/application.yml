@@ -1,0 +1,15 @@
+server:
+  port: 8047
+  max-http-header-size: 10240
+  tomcat:
+    mbeanregistry:
+      enabled: true
+
+spring:
+  profiles:
+    active: @spring.active@
+  application:
+    name: bins-global-id-provider
+
+log:
+  path: bins-global-id-provider

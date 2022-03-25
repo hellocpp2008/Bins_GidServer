@@ -1,0 +1,39 @@
+gid:
+  name: com.bins.global.id
+  snowflake:
+    enable: true
+    zk:
+      address: localhost:2181
+    port: 8840
+
+dubbo:
+  application:
+    name: bins-global-id-provider
+    qos-port: 22237
+    version: 1.0.0
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 22997
+    threadpool: fixed
+    threads: 500
+  consumer:
+    check: false
+    version: 0.0.1
+  provider:
+    version: 0.0.1
+    timeout: 3000
+    retries: -1
+  registry:
+    check: false
+    protocol: zookeeper
+    address: localhost:2181
+  gra:
+    group: prod-group
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
