@@ -10,7 +10,6 @@ import com.bins.id.global.api.GlobalIdDubboRemote;
 import com.bins.id.global.api.ResultCodeEnum;
 import com.bins.id.global.api.ResultVO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.common.utils.LogUtil;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -22,7 +21,7 @@ import org.springframework.util.StringUtils;
  * @date 2021/2/4
  */
 @Slf4j
-@DubboService(version = "0.0.1", group = "${dubbo.gra.group}")
+@DubboService(version = "0.0.1", group = "${spring.dubbo.gra.group}")
 public class GlobalIdDubboProvider implements GlobalIdDubboRemote {
 
     @Autowired

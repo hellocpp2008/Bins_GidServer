@@ -13,4 +13,48 @@
     <module>bins-global-id-serve</module>
   </modules>
 
+  <properties>
+    <org-apache-curator.version>4.2.0</org-apache-curator.version>
+    <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+    <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
+    <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
+
+    <!--    ████ 0.2.2.RELEASE的版本不行，其中的dubbo-spring-boot-starter的本号太低，里面没有@DubboService注解 ████ -->
+    <!--    <spring-cloud-alibaba.version>0.2.2.RELEASE</spring-cloud-alibaba.version>-->
+    <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <!--spring boot 依赖-->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!--spring cloud 依赖-->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${spring-cloud-alibaba.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+    </dependencies>
+
+  </dependencyManagement>
+
 </project>
