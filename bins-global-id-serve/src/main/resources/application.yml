@@ -7,7 +7,7 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: container
   application:
     name: bins-global-id-provider
 

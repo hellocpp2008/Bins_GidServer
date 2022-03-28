@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
@@ -15,6 +16,7 @@ import org.springframework.core.env.Environment;
  * @author zhouxingbin
  * @date 2021/2/4
  */
+@EnableFeignClients({"com.bins.gid.global.id.*"})
 @EnableDubbo
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.bins.gid.global.id.*"})

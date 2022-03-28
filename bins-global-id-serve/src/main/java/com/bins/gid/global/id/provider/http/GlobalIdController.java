@@ -24,12 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
+@RequestMapping("/api")
 public class GlobalIdController {
 
     @Autowired
     private SnowFlakeIdGenerator snowFlakeIdGenerator;
 
-    @RequestMapping(value = "/api/gid/get")
+    @RequestMapping(value = "/gid/get")
     public ResultVO getGid(@RequestParam(required = false) String key) {
         try {
             log.info("GlobalIdController:getGid:start:key:{}", key);
